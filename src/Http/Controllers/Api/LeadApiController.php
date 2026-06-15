@@ -3,105 +3,113 @@
 namespace Dev3bdulrahman\Crm\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Dev3bdulrahman\Crm\Http\Requests\LeadStoreRequest;
+use App\Traits\HasApiResponse;
+use Dev3bdulrahman\Crm\Http\Requests\Api\StoreLeadApiRequest;
+use Dev3bdulrahman\Crm\Http\Requests\Api\UpdateLeadApiRequest;
+use Dev3bdulrahman\Crm\Http\Resources\CustomerResource;
 use Dev3bdulrahman\Crm\Http\Resources\LeadResource;
+use Dev3bdulrahman\Crm\Http\Resources\OpportunityResource;
+use Dev3bdulrahman\Crm\Models\Lead;
 use Dev3bdulrahman\Crm\Services\LeadService;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class LeadApiController extends Controller
 {
+    use HasApiResponse;
+
     /**
      * List all leads.
      */
     public function index(Request $request, LeadService $service): JsonResponse
     {
+        $this->authorize('viewAny', Lead::class);
+
         $filters = $request->only(['search', 'lead_source_id', 'lead_status_id', 'assigned_to', 'status']);
         $perPage = (int) $request->get('per_page', 10);
         $leads = $service->listLeads($filters, $perPage);
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Leads retrieved successfully'),
-            'data' => LeadResource::collection($leads->items()),
-            'meta' => [
+        return $this->success(
+            LeadResource::collection($leads->items()),
+            __('Leads retrieved successfully'),
+            200,
+            [
                 'current_page' => $leads->currentPage(),
                 'last_page' => $leads->lastPage(),
                 'per_page' => $leads->perPage(),
                 'total' => $leads->total(),
-            ],
-            'errors' => []
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a new lead.
      */
-    public function store(LeadStoreRequest $request, LeadService $service): JsonResponse
+    public function store(StoreLeadApiRequest $request, LeadService $service): JsonResponse
     {
+        $this->authorize('create', Lead::class);
+
         $lead = $service->createLead($request->validated());
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Lead created successfully'),
-            'data' => new LeadResource($lead),
-            'errors' => []
-        ], 210); // 201 Created status
+        return $this->success(
+            new LeadResource($lead),
+            __('Lead created successfully'),
+            201
+        );
     }
 
     /**
      * Show a single lead.
      */
-    public function show($id, LeadService $service): JsonResponse
+    public function show(Lead $lead, LeadService $service): JsonResponse
     {
-        $lead = $service->listLeads()->getCollection()->firstWhere('id', $id);
-        if (!$lead) {
-            $lead = \Dev3bdulrahman\Crm\Models\Lead::findOrFail($id);
-        }
+        $this->authorize('view', $lead);
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Lead details retrieved'),
-            'data' => new LeadResource($lead),
-            'errors' => []
-        ]);
+        $lead->load(['source', 'statusStep', 'assignee', 'activities', 'notes']);
+
+        return $this->success(
+            new LeadResource($lead),
+            __('Lead details retrieved')
+        );
     }
 
     /**
      * Update an existing lead.
      */
-    public function update($id, LeadStoreRequest $request, LeadService $service): JsonResponse
+    public function update(UpdateLeadApiRequest $request, Lead $lead, LeadService $service): JsonResponse
     {
-        $lead = $service->updateLead($id, $request->validated());
+        $this->authorize('update', $lead);
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Lead updated successfully'),
-            'data' => new LeadResource($lead),
-            'errors' => []
-        ]);
+        $lead = $service->updateLead($lead->id, $request->validated());
+
+        return $this->success(
+            new LeadResource($lead),
+            __('Lead updated successfully')
+        );
     }
 
     /**
      * Delete a lead.
      */
-    public function destroy($id, LeadService $service): JsonResponse
+    public function destroy(Lead $lead, LeadService $service): JsonResponse
     {
-        $service->deleteLead($id);
+        $this->authorize('delete', $lead);
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Lead deleted successfully'),
-            'data' => null,
-            'errors' => []
-        ]);
+        $service->deleteLead($lead->id);
+
+        return $this->success(
+            null,
+            __('Lead deleted successfully')
+        );
     }
 
     /**
      * Convert a lead to Customer and/or Opportunity.
      */
-    public function convert($id, Request $request, LeadService $service): JsonResponse
+    public function convert(Lead $lead, Request $request, LeadService $service): JsonResponse
     {
+        $this->authorize('update', $lead);
+
         $data = $request->validate([
             'convert_to_customer' => 'boolean',
             'customer_group_id' => 'nullable|exists:crm_customer_groups,id',
@@ -114,17 +122,15 @@ class LeadApiController extends Controller
             'close_date' => 'nullable|date',
         ]);
 
-        $result = $service->convertLead($id, $data);
+        $result = $service->convertLead($lead->id, $data);
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Lead converted successfully'),
-            'data' => [
+        return $this->success(
+            [
                 'lead' => new LeadResource($result['lead']),
                 'customer' => $result['customer'] ? new CustomerResource($result['customer']) : null,
                 'opportunity' => $result['opportunity'] ? new OpportunityResource($result['opportunity']) : null,
             ],
-            'errors' => []
-        ]);
+            __('Lead converted successfully')
+        );
     }
 }

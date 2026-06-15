@@ -2,6 +2,9 @@
 
 namespace Dev3bdulrahman\Crm\Services;
 
+use Dev3bdulrahman\Crm\Events\CustomerCreated;
+use Dev3bdulrahman\Crm\Events\LeadConverted;
+use Dev3bdulrahman\Crm\Events\LeadCreated;
 use Dev3bdulrahman\Crm\Models\Lead;
 use Dev3bdulrahman\Crm\Models\LeadStatus;
 use Dev3bdulrahman\Crm\Models\Contact;
@@ -54,7 +57,11 @@ class LeadService
      */
     public function createLead(array $data): Lead
     {
-        return Lead::create($data);
+        $lead = Lead::create($data);
+
+        LeadCreated::dispatch($lead, auth()->id(), $lead->company_id);
+
+        return $lead;
     }
 
     /**
@@ -81,7 +88,7 @@ class LeadService
      */
     public function convertLead($id, array $data): array
     {
-        return DB::transaction(function () use ($id, $data) {
+        $result = DB::transaction(function () use ($id, $data) {
             $lead = Lead::findOrFail($id);
             $companyId = $lead->company_id;
 
@@ -159,5 +166,22 @@ class LeadService
                 'opportunity' => $opportunity,
             ];
         });
+
+        // Dispatch events after transaction commits
+        $lead = $result['lead'];
+        $customer = $result['customer'];
+        $opportunity = $result['opportunity'];
+
+        // Determine conversion type
+        $conversionType = ($customer && $opportunity) ? 'both'
+            : ($customer ? 'to_customer' : 'to_opportunity');
+
+        LeadConverted::dispatch($lead, $customer, $opportunity, $conversionType, auth()->id());
+
+        if ($customer) {
+            CustomerCreated::dispatch($customer, 'converted_from_lead', $lead->company_id);
+        }
+
+        return $result;
     }
 }

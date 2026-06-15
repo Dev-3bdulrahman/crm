@@ -119,4 +119,113 @@ return [
     'delete_opp_title' => 'Delete Deal',
     'delete_opp_confirm' => 'Are you sure you want to permanently delete this deal?',
     'move_to' => 'Move to',
+
+    // Show page keys
+    'lead_details' => 'Lead Details',
+    'customer_details' => 'Customer Details',
+    'opportunity_details' => 'Opportunity Details',
+    'created_at' => 'Created At',
+    'updated_at' => 'Updated At',
+    'details' => 'Details',
+
+    // Activity keys
+    'activities' => 'Activities',
+    'add_activity' => 'Add Activity',
+    'activity_type' => 'Activity Type',
+    'type_call' => 'Call',
+    'type_meeting' => 'Meeting',
+    'type_task' => 'Task',
+    'type_email' => 'Email',
+    'due_date' => 'Due Date',
+    'description' => 'Description',
+    'mark_complete' => 'Mark as Complete',
+    'pending_activities' => 'Pending Activities',
+    'completed_activities' => 'Completed Activities',
+    'completed' => 'Completed',
+    'no_activities' => 'No activities found.',
+    'activity_added' => 'Activity added successfully.',
+    'activity_completed' => 'Activity marked as completed.',
+    'activity_title' => 'Activity Title',
+    'activity_title_placeholder' => 'Enter activity title...',
+    'activity_description_placeholder' => 'Enter activity description...',
+    'select_activity_type' => 'Select Activity Type',
+    'activity_call' => 'Call',
+    'activity_meeting' => 'Meeting',
+    'activity_email' => 'Email',
+    'activity_task' => 'Task',
+
+    // Note keys
+    'notes' => 'Notes',
+    'add_note' => 'Add Note',
+    'note_content' => 'Note Content',
+    'no_notes' => 'No notes found.',
+    'note_by' => 'Note by',
+    'note_added' => 'Note added successfully.',
+    'note_placeholder' => 'Write your note here...',
+    'unknown_user' => 'Unknown User',
+    'unknown_author' => 'Unknown Author',
+
+    // Kanban keys
+    'kanban' => 'Kanban',
+    'drag_to_move' => 'Drag to move',
+    'no_opportunities_in_stage' => 'No opportunities in this stage',
+    'no_pipelines' => 'No Pipelines',
+    'no_pipelines_desc' => 'No pipelines have been configured yet.',
+
+    // Conversion keys
+    'conversion_success' => 'Lead converted successfully.',
+    'conversion_failed' => 'Lead conversion failed.',
+    'lead_converted' => 'Lead has been converted.',
+
+    // Create/Edit page keys
+    'add_lead_description' => 'Add a new lead to the CRM system',
+    'edit_lead_description' => 'Edit the lead information',
+    'add_customer_description' => 'Add a new customer to the system',
+    'edit_customer_description' => 'Edit the customer information',
+    'create_opportunity' => 'Create Opportunity',
+    'create_opportunity_description' => 'Create a new sales opportunity',
+    'edit_opportunity' => 'Edit Opportunity',
+    'edit_opportunity_description' => 'Edit the opportunity information',
+    'create_lead' => 'Create Lead',
+    'view_lead' => 'View Lead',
+    'view_customer' => 'View Customer',
+    'select_lead' => 'Select Lead',
+
+    // Authorization keys
+    'unauthorized' => 'Unauthorized access.',
+    'not_found' => 'Resource not found.',
+
+    // API message keys
+    'leads_retrieved' => 'Leads retrieved successfully.',
+    'lead_created' => 'Lead created successfully.',
+    'lead_updated' => 'Lead updated successfully.',
+    'lead_deleted' => 'Lead deleted successfully.',
+    'customers_retrieved' => 'Customers retrieved successfully.',
+    'customer_created' => 'Customer created successfully.',
+    'customer_updated' => 'Customer updated successfully.',
+    'customer_deleted' => 'Customer deleted successfully.',
+    'opportunities_retrieved' => 'Opportunities retrieved successfully.',
+    'opportunity_created' => 'Opportunity created successfully.',
+    'opportunity_updated' => 'Opportunity updated successfully.',
+    'opportunity_deleted' => 'Opportunity deleted successfully.',
+    'stage_updated' => 'Stage updated successfully.',
+    'activities_retrieved' => 'Activities retrieved successfully.',
+    'activity_created' => 'Activity created successfully.',
+    'validation_failed' => 'Validation failed.',
+
+    // Opportunity status keys
+    'open' => 'Open',
+    'won' => 'Won',
+    'lost' => 'Lost',
+    'status_open' => 'Open',
+    'status_won' => 'Won',
+    'status_lost' => 'Lost',
+    'lead' => 'Lead',
+    'stage' => 'Stage',
+    'select_organization' => 'Select Organization',
+
+    // Other keys
+    'new_lead_assigned' => 'A new lead has been assigned to you.',
+    'no_opportunities' => 'No opportunities found.',
+    'contact' => 'Contact',
 ];

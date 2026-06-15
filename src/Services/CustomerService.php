@@ -2,6 +2,7 @@
 
 namespace Dev3bdulrahman\Crm\Services;
 
+use Dev3bdulrahman\Crm\Events\CustomerCreated;
 use Dev3bdulrahman\Crm\Models\Customer;
 use Dev3bdulrahman\Crm\Models\CustomerGroup;
 use Dev3bdulrahman\Crm\Models\Organization;
@@ -43,7 +44,11 @@ class CustomerService
 
     public function createCustomer(array $data): Customer
     {
-        return Customer::create($data);
+        $customer = Customer::create($data);
+
+        CustomerCreated::dispatch($customer, 'direct', $customer->company_id);
+
+        return $customer;
     }
 
     public function updateCustomer($id, array $data): Customer

@@ -3,94 +3,102 @@
 namespace Dev3bdulrahman\Crm\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Dev3bdulrahman\Crm\Http\Requests\CustomerStoreRequest;
+use App\Traits\HasApiResponse;
+use Dev3bdulrahman\Crm\Http\Requests\Api\StoreCustomerApiRequest;
+use Dev3bdulrahman\Crm\Http\Requests\Api\UpdateCustomerApiRequest;
 use Dev3bdulrahman\Crm\Http\Resources\CustomerResource;
+use Dev3bdulrahman\Crm\Models\Customer;
 use Dev3bdulrahman\Crm\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class CustomerApiController extends Controller
 {
+    use HasApiResponse;
+
     /**
      * List all customers.
      */
     public function index(Request $request, CustomerService $service): JsonResponse
     {
+        $this->authorize('viewAny', Customer::class);
+
         $filters = $request->only(['search', 'customer_group_id', 'organization_id', 'status']);
         $perPage = (int) $request->get('per_page', 10);
         $customers = $service->listCustomers($filters, $perPage);
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Customers retrieved successfully'),
-            'data' => CustomerResource::collection($customers->items()),
-            'meta' => [
+        return $this->success(
+            CustomerResource::collection($customers->items()),
+            'Customers retrieved successfully',
+            200,
+            [
                 'current_page' => $customers->currentPage(),
                 'last_page' => $customers->lastPage(),
                 'per_page' => $customers->perPage(),
                 'total' => $customers->total(),
-            ],
-            'errors' => []
-        ]);
+            ]
+        );
     }
 
     /**
      * Store a new customer.
      */
-    public function store(CustomerStoreRequest $request, CustomerService $service): JsonResponse
+    public function store(StoreCustomerApiRequest $request, CustomerService $service): JsonResponse
     {
+        $this->authorize('create', Customer::class);
+
         $customer = $service->createCustomer($request->validated());
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Customer created successfully'),
-            'data' => new CustomerResource($customer),
-            'errors' => []
-        ], 210);
+        return $this->success(
+            new CustomerResource($customer),
+            'Customer created successfully',
+            201
+        );
     }
 
     /**
      * Show customer details.
      */
-    public function show($id, CustomerService $service): JsonResponse
+    public function show(Customer $customer): JsonResponse
     {
-        $customer = \Dev3bdulrahman\Crm\Models\Customer::findOrFail($id);
+        $this->authorize('view', $customer);
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Customer details retrieved'),
-            'data' => new CustomerResource($customer),
-            'errors' => []
-        ]);
+        $customer->load(['group', 'organization', 'contact', 'opportunities']);
+
+        return $this->success(
+            new CustomerResource($customer),
+            'Customer details retrieved'
+        );
     }
 
     /**
      * Update an existing customer.
      */
-    public function update($id, CustomerStoreRequest $request, CustomerService $service): JsonResponse
+    public function update(UpdateCustomerApiRequest $request, Customer $customer, CustomerService $service): JsonResponse
     {
-        $customer = $service->updateCustomer($id, $request->validated());
+        $this->authorize('update', $customer);
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Customer updated successfully'),
-            'data' => new CustomerResource($customer),
-            'errors' => []
-        ]);
+        $customer->update($request->validated());
+        $customer->refresh();
+
+        return $this->success(
+            new CustomerResource($customer),
+            'Customer updated successfully'
+        );
     }
 
     /**
      * Delete a customer.
      */
-    public function destroy($id, CustomerService $service): JsonResponse
+    public function destroy(Customer $customer, CustomerService $service): JsonResponse
     {
-        $service->deleteCustomer($id);
+        $this->authorize('delete', $customer);
 
-        return response()->json([
-            'success' => true,
-            'message' => __('Customer deleted successfully'),
-            'data' => null,
-            'errors' => []
-        ]);
+        $service->deleteCustomer($customer->id);
+
+        return $this->success(
+            null,
+            'Customer deleted successfully'
+        );
     }
 }

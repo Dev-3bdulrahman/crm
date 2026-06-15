@@ -119,4 +119,113 @@ return [
     'delete_opp_title' => 'حذف صفقة',
     'delete_opp_confirm' => 'هل أنت متأكد من رغبتك في حذف هذه الصفقة نهائياً؟',
     'move_to' => 'نقل إلى مرحلة',
+
+    // Show page keys
+    'lead_details' => 'تفاصيل العميل المحتمل',
+    'customer_details' => 'تفاصيل العميل',
+    'opportunity_details' => 'تفاصيل الفرصة',
+    'created_at' => 'تاريخ الإنشاء',
+    'updated_at' => 'تاريخ التحديث',
+    'details' => 'التفاصيل',
+
+    // Activity keys
+    'activities' => 'الأنشطة',
+    'add_activity' => 'إضافة نشاط',
+    'activity_type' => 'نوع النشاط',
+    'type_call' => 'مكالمة',
+    'type_meeting' => 'اجتماع',
+    'type_task' => 'مهمة',
+    'type_email' => 'بريد إلكتروني',
+    'due_date' => 'تاريخ الاستحقاق',
+    'description' => 'الوصف',
+    'mark_complete' => 'تعيين كمكتمل',
+    'pending_activities' => 'الأنشطة المعلقة',
+    'completed_activities' => 'الأنشطة المكتملة',
+    'completed' => 'مكتمل',
+    'no_activities' => 'لا توجد أنشطة.',
+    'activity_added' => 'تمت إضافة النشاط بنجاح.',
+    'activity_completed' => 'تم تعيين النشاط كمكتمل.',
+    'activity_title' => 'عنوان النشاط',
+    'activity_title_placeholder' => 'أدخل عنوان النشاط...',
+    'activity_description_placeholder' => 'أدخل وصف النشاط...',
+    'select_activity_type' => 'اختر نوع النشاط',
+    'activity_call' => 'مكالمة',
+    'activity_meeting' => 'اجتماع',
+    'activity_email' => 'بريد إلكتروني',
+    'activity_task' => 'مهمة',
+
+    // Note keys
+    'notes' => 'الملاحظات',
+    'add_note' => 'إضافة ملاحظة',
+    'note_content' => 'محتوى الملاحظة',
+    'no_notes' => 'لا توجد ملاحظات.',
+    'note_by' => 'ملاحظة بواسطة',
+    'note_added' => 'تمت إضافة الملاحظة بنجاح.',
+    'note_placeholder' => 'اكتب ملاحظتك هنا...',
+    'unknown_user' => 'مستخدم غير معروف',
+    'unknown_author' => 'كاتب غير معروف',
+
+    // Kanban keys
+    'kanban' => 'كانبان',
+    'drag_to_move' => 'اسحب للنقل',
+    'no_opportunities_in_stage' => 'لا توجد فرص في هذه المرحلة',
+    'no_pipelines' => 'لا توجد خطوط مبيعات',
+    'no_pipelines_desc' => 'لم يتم إعداد خطوط مبيعات بعد.',
+
+    // Conversion keys
+    'conversion_success' => 'تم تحويل العميل المحتمل بنجاح.',
+    'conversion_failed' => 'فشل تحويل العميل المحتمل.',
+    'lead_converted' => 'تم تحويل العميل المحتمل.',
+
+    // Create/Edit page keys
+    'add_lead_description' => 'إضافة عميل محتمل جديد إلى النظام',
+    'edit_lead_description' => 'تعديل معلومات العميل المحتمل',
+    'add_customer_description' => 'إضافة عميل جديد إلى النظام',
+    'edit_customer_description' => 'تعديل معلومات العميل',
+    'create_opportunity' => 'إنشاء فرصة',
+    'create_opportunity_description' => 'إنشاء فرصة مبيعات جديدة',
+    'edit_opportunity' => 'تعديل الفرصة',
+    'edit_opportunity_description' => 'تعديل معلومات الفرصة',
+    'create_lead' => 'إنشاء عميل محتمل',
+    'view_lead' => 'عرض العميل المحتمل',
+    'view_customer' => 'عرض العميل',
+    'select_lead' => 'اختر عميل محتمل',
+
+    // Authorization keys
+    'unauthorized' => 'وصول غير مصرح به.',
+    'not_found' => 'المورد غير موجود.',
+
+    // API message keys
+    'leads_retrieved' => 'تم استرجاع العملاء المحتملين بنجاح.',
+    'lead_created' => 'تم إنشاء العميل المحتمل بنجاح.',
+    'lead_updated' => 'تم تحديث العميل المحتمل بنجاح.',
+    'lead_deleted' => 'تم حذف العميل المحتمل بنجاح.',
+    'customers_retrieved' => 'تم استرجاع العملاء بنجاح.',
+    'customer_created' => 'تم إنشاء العميل بنجاح.',
+    'customer_updated' => 'تم تحديث العميل بنجاح.',
+    'customer_deleted' => 'تم حذف العميل بنجاح.',
+    'opportunities_retrieved' => 'تم استرجاع الفرص بنجاح.',
+    'opportunity_created' => 'تم إنشاء الفرصة بنجاح.',
+    'opportunity_updated' => 'تم تحديث الفرصة بنجاح.',
+    'opportunity_deleted' => 'تم حذف الفرصة بنجاح.',
+    'stage_updated' => 'تم تحديث المرحلة بنجاح.',
+    'activities_retrieved' => 'تم استرجاع الأنشطة بنجاح.',
+    'activity_created' => 'تم إنشاء النشاط بنجاح.',
+    'validation_failed' => 'فشل التحقق من البيانات.',
+
+    // Opportunity status keys
+    'open' => 'مفتوح',
+    'won' => 'مربوح',
+    'lost' => 'مفقود',
+    'status_open' => 'مفتوح',
+    'status_won' => 'مربوح',
+    'status_lost' => 'مفقود',
+    'lead' => 'عميل محتمل',
+    'stage' => 'المرحلة',
+    'select_organization' => 'اختر الشركة',
+
+    // Other keys
+    'new_lead_assigned' => 'تم تعيين عميل محتمل جديد لك.',
+    'no_opportunities' => 'لا توجد فرص مبيعات.',
+    'contact' => 'جهة الاتصال',
 ];
