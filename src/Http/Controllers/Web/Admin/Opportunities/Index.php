@@ -99,7 +99,7 @@ class Index extends Component
         $this->name = '';
         $this->value = '0.00';
         $this->closeDate = now()->addDays(30)->format('Y-m-d');
-        $this->selectedStageId = $stageId ?: ($this->stages->isNotEmpty() ? $this->stages->first()->id : null);
+        $this->selectedStageId = $stageId ?: (is_array($this->stages) ? ($this->stages[0]['id'] ?? null) : ($this->stages->isNotEmpty() ? $this->stages->first()->id : null));
         $this->customerId = null;
         $this->leadId = null;
         $this->userId = auth()->id();

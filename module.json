@@ -1,0 +1,11 @@
+{
+    "name": "CRM",
+    "slug": "crm",
+    "version": "1.0.0",
+    "description": "Customer Relationship Management",
+    "description_ar": "إدارة علاقات العملاء",
+    "is_active": true,
+    "provider": "Dev3bdulrahman\\Crm\\CrmServiceProvider",
+    "dependencies": [],
+    "order": 1
+}

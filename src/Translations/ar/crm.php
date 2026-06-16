@@ -60,6 +60,7 @@ return [
     // Customers tab labels
     'customers' => 'العملاء وجهات الاتصال',
     'manage_contacts_and_organizations' => 'إدارة ملفات العملاء، الشركات، وجهات الاتصال',
+    'customer_name' => 'اسم العميل',
     'add_customer' => 'إضافة عميل',
     'edit_customer' => 'تعديل عميل',
     'add_organization' => 'إضافة شركة / منظمة',
