@@ -2,7 +2,7 @@
   "name": "dev-3bdulrahman/crm",
   "description": "A complete CRM module for Laravel ERP — customers, leads, opportunities, pipelines & activities.",
   "type": "library",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "license": "MIT",
   "authors": [
     {
